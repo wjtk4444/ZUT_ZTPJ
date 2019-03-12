@@ -1,7 +1,7 @@
 # ZUT_ZTPJ
 ### Zadania z przedmiotu Zaawansowane Techniki Programowania w Javie
 
-Baza danych została wykonana z użyciem technologii postgresql. Instrukcja importu bazy z terminala:
+Baza danych została wykonana z użyciem technologii postgresql. Instrukcja importu bazy z poziomu terminala:
 ```
 >psql create database workers;
 >psql workers < ZUT_ZTPJ/database/workers.db;
