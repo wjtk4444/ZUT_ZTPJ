@@ -10,7 +10,7 @@ Adres, nazwa użytkownika oraz hasło są zapisane "na sztywno" w pliku [Connect
 
 
 # Postęp prac:
-Lab2:
+#### Lab2:
 - [x] lista pracowników
 - [x] dodawanie pracownika
 - [x] usuwanie pracownika
