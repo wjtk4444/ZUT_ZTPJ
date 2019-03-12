@@ -30,10 +30,22 @@ public class Utils
         System.out.flush();
     }
 
-    static String prompForNullableString(String nullPattern)
+    static String promptForString(String message)
+    {
+        while(true)
+        {
+            System.out.println("Wartosc nie moze byc pusta");
+            System.out.print(message);
+            String response = scanner.nextLine();
+            if(response.trim().length() > 0)
+                return response;
+        }
+    }
+
+    static String promptForNullableString(String nullPattern)
     {
         String response = scanner.nextLine();
-        if (response.contentEquals(nullPattern))
+        if (response.contentEquals(nullPattern) || response.trim().length() == 0)
             return null;
 
         return response;

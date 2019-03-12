@@ -6,8 +6,7 @@ import model.worker.Tradesman;
 
 import java.util.Scanner;
 
-import static ui.Utils.prompForInteger;
-import static ui.Utils.prompForNullableString;
+import static ui.Utils.*;
 
 public class WorkerUI
 {
@@ -17,23 +16,18 @@ public class WorkerUI
     {
         System.out.println("Dodaj pracownika:");
 
-        System.out.print("Imie : ");
-        String firstName = scanner.nextLine();
-
-        System.out.print("Nazwisko : ");
-        String lastName = scanner.nextLine();
-
-        System.out.print("Pesel : ");
-        String pesel = scanner.nextLine();
+        String firstName = promptForString("Imie : ");
+        String lastName = promptForString("Nazwisko : ");
+        String pesel = promptForString("Pesel : ");
 
         System.out.print("[D]yrektor / [H]andlowiec / [P]racownik : ");
         Position position = promptForPosition();
 
         System.out.print("Numer telefonu / brak : ");
-        String phoneNumber = prompForNullableString("brak");
+        String phoneNumber = promptForNullableString("brak");
 
         System.out.print("Numer karty sluzbowej / brak : ");
-        String serviceCardNumber = prompForNullableString("brak");
+        String serviceCardNumber = promptForNullableString("brak");
 
         int salary = prompForInteger("Wynagrodzenie : ");
 
