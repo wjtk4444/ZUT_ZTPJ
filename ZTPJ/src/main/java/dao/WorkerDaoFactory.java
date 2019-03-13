@@ -17,17 +17,20 @@ public class WorkerDaoFactory
             {
                 case DIRECTOR:
                     cache.put(position, new DirectorDao());
+                    break;
                 case TRADESMAN:
                     cache.put(position, new TradesmanDao());
+                    break;
                 case WORKER:
                     cache.put(position, new WorkerDao());
+                    break;
             }
     }
 
     public static WorkerDao getWorkerDao(Position position)
     {
         if(cache.containsKey(position))
-            return new WorkerDao();
+            return cache.get(position);
         else
             throw new NotImplementedException();
     }

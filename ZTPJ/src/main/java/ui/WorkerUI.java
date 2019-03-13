@@ -24,10 +24,10 @@ public class WorkerUI
         Position position = promptForPosition();
 
         System.out.print("Numer telefonu / brak : ");
-        String phoneNumber = promptForNullableString("brak");
+        String phoneNumber = promptForNullableString();
 
         System.out.print("Numer karty sluzbowej / brak : ");
-        String serviceCardNumber = promptForNullableString("brak");
+        String serviceCardNumber = promptForNullableString();
 
         int salary = prompForInteger("Wynagrodzenie : ");
 
