@@ -78,15 +78,18 @@ public class Menu
     {
         while (true)
         {
-            switch (scanner.nextLine().charAt(0))
-            {
-                case 'Z':
-                case 'z':
-                    return true;
-                case 'O':
-                case 'o':
-                    return false;
-            }
+            String line = scanner.nextLine();
+            if(line.length() > 0)
+                switch (line.charAt(0))
+                {
+                    case 'Z':
+                    case 'z':
+                        return true;
+                    case 'O':
+                    case 'o':
+                        return false;
+                }
+
             System.out.println("Niepoprawna opcja");
             System.out.print("[Z]apisz / [O]drzuc");
         }
@@ -96,18 +99,21 @@ public class Menu
     {
         while (true)
         {
-            switch (scanner.nextLine().charAt(0))
-            {
-                case 'U':
-                case 'u':
-                    return 'u';
-                case 'N':
-                case 'n':
-                    return 'n';
-                case 'W':
-                case 'w':
-                    return 'w';
-            }
+            String line = scanner.nextLine();
+            if(line.length() > 0)
+                switch (line.charAt(0))
+                {
+                    case 'U':
+                    case 'u':
+                        return 'u';
+                    case 'N':
+                    case 'n':
+                        return 'n';
+                    case 'W':
+                    case 'w':
+                        return 'w';
+                }
+
             System.out.println("Niepoprawna opcja");
             System.out.print("[U]sun / [N]astepny pracownik / [W]yjscie");
         }
