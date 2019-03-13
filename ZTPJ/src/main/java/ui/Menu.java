@@ -26,7 +26,7 @@ public class Menu
             System.out.println("    4. Kopia zapasowa:");
             System.out.println("    0. Wyjscie:");
 
-            switch (prompForInteger("Wybor>"))
+            switch (prompForInteger("Wybor> "))
             {
                 case 0:
                     break while_loop;
@@ -90,7 +90,7 @@ public class Menu
                 }
 
             System.out.println("Niepoprawna opcja");
-            System.out.print("[Z]apisz / [O]drzuc");
+            System.out.print("[Z]apisz / [O]drzuc : ");
         }
     }
 
@@ -114,7 +114,7 @@ public class Menu
                 }
 
             System.out.println("Niepoprawna opcja");
-            System.out.print("[U]sun / [N]astepny pracownik / [W]yjscie");
+            System.out.print("[U]sun / [N]astepny pracownik / [W]yjscie : ");
         }
     }
 
@@ -124,7 +124,7 @@ public class Menu
         {
             System.out.println(worker);
             System.out.println("Czy chcesz usunac tego pracownika?");
-            System.out.print("[U]sun / [N]astepny pracownik / [W]yjscie");
+            System.out.print("[U]sun / [N]astepny pracownik / [W]yjscie : ");
             char choice = promptForDelete();
             if(choice == 'u')
             {
@@ -184,7 +184,7 @@ public class Menu
                 }
 
             System.out.println("Niepoprawna opcja");
-            System.out.println("[Z]achowaj / [O]dtworz / [W]yjscie");
+            System.out.println("[Z]achowaj / [O]dtworz / [W]yjscie : ");
         }
     }
 }
