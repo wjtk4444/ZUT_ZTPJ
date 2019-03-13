@@ -12,12 +12,13 @@ public class Utils
         {
             try
             {
+                System.out.print(message);
                 String response = scanner.nextLine();
                 return Integer.parseInt(response);
             }
             catch(NumberFormatException ex)
             {
-                System.out.print(message);
+                // do nothing
             }
         }
     }
