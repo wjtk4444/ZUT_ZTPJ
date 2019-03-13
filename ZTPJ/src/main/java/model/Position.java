@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Position
+public enum Position implements Serializable
 {
     WORKER("Pracownik"),
     TRADESMAN("Handlowiec"),

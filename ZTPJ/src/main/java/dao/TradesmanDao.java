@@ -27,7 +27,7 @@ public class TradesmanDao extends WorkerDao
                     + "VALUES(?, ?, ?)";
             insertTradesmanCommissionStatement = connection.prepareStatement(insertTradesmanCommissionSQL);
 
-            String deleteTradesmanCommissionSQL = "DELETE FROM tradesmans_commisions WHERE worker_id = ?";
+            String deleteTradesmanCommissionSQL = "DELETE FROM tradesmans_commissions WHERE worker_id = ?";
             deleteTradesmanCommissionStatement = connection.prepareStatement(deleteTradesmanCommissionSQL);
         }
         catch (SQLException ex)
@@ -90,10 +90,11 @@ public class TradesmanDao extends WorkerDao
     {
         try
         {
+            boolean b = super.delete(worker);
             deleteTradesmanCommissionStatement.setInt(1, worker.getId());
             deleteTradesmanCommissionStatement.execute();
 
-            return super.delete(worker);
+            return  true;
         }
         catch (SQLException ex)
         {

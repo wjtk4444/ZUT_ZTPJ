@@ -1,6 +1,8 @@
 package model;
 
-public class Worker
+import java.io.Serializable;
+
+public class Worker implements Serializable
 {
     private String firstName;
     private String lastName;

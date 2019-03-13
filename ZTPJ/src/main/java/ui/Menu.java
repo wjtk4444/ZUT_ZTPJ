@@ -1,5 +1,6 @@
 package ui;
 
+import backup.Backup;
 import dao.WorkerDao;
 import dao.WorkerDaoFactory;
 import model.Position;
@@ -140,6 +141,50 @@ public class Menu
 
     static void backup()
     {
-        System.out.println("Not implemented (yet)");
+        System.out.println("UWAGA: W przypadku przywracania bazy z pliku, wszystkie obecne dane zostana zastapione.");
+        System.out.print("[Z]achowaj / [O]dtworz / [W]yjscie");
+        char choice = promptForBackup();
+        if(choice == 'z')
+        {
+            String filePath = promptForString("Podaj nazwe pliku do zapisu. Dopuszczalne rozszerzenia: .zip oraz .gzip : ");
+            if(Backup.backupDatabaseToFile(filePath))
+                System.out.println("Zapisano pomyslnie");
+            else
+                System.out.println("Nie udalo sie zapisac pliku. Sprawdz nazwe pliku i sprobuj ponownie");
+        }
+        else if(choice == 'o')
+        {
+            String filePath = promptForString("Podaj nazwe pliku do odczytu. Dopuszczalne rozszerzenia: .zip oraz .gzip : ");
+            if(Backup.restoreDatabaseFromFile(filePath))
+                System.out.println("Odczytano pomyslnie");
+            else
+                System.out.println("Nie udalo sie odczytac pliku. Sprawdz nazwe pliku i sprobuj ponownie");
+
+        }
+        // else do nothing for choice == 'w'
+    }
+
+    static char promptForBackup()
+    {
+        while (true)
+        {
+            String line = scanner.nextLine();
+            if(line.length() > 0)
+                switch (line.charAt(0))
+                {
+                    case 'Z':
+                    case 'z':
+                        return 'z';
+                    case 'O':
+                    case 'o':
+                        return 'o';
+                    case 'W':
+                    case 'w':
+                        return 'w';
+                }
+
+            System.out.println("Niepoprawna opcja");
+            System.out.println("[Z]achowaj / [O]dtworz / [W]yjscie");
+        }
     }
 }
