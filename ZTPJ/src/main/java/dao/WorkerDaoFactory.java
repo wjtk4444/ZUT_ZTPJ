@@ -26,9 +26,9 @@ public class WorkerDaoFactory
 
     public static WorkerDao getWorkerDao(Position position)
     {
-        //if(cache.containsKey(position))
+        if(cache.containsKey(position))
             return new WorkerDao();
-        //else
-          //  throw new NotImplementedException();
+        else
+            throw new NotImplementedException();
     }
 }

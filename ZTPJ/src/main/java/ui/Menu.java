@@ -117,16 +117,14 @@ public class Menu
     {
         for(Worker worker : WorkerDaoFactory.getWorkerDao(Position.WORKER).getAll())
         {
+            clearScreen();
             System.out.println(worker);
-            System.out.println("***************************************************************************");
-
             System.out.println("Czy chcesz usunac tego pracownika?");
             System.out.print("[U]sun / [N]astepny pracownik / [W]yjscie");
             char choice = promptForDelete();
             if(choice == 'u')
             {
                 WorkerDaoFactory.getWorkerDao(worker.getPosition()).delete(worker);
-                System.out.println("Usunieto pracownika " + worker.getFirstName() + " " + worker.getLastName());
             }
             else if(choice == 'w')
             {
