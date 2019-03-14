@@ -1,5 +1,6 @@
 package backup;
 
+import dao.WorkerDao;
 import dao.WorkerDaoFactory;
 import model.Position;
 import model.Worker;
@@ -13,7 +14,7 @@ public class Backup
 {
     public static boolean backupDatabaseToFile(String filePath)
     {
-        List<Worker> workers = WorkerDaoFactory.getWorkerDao(Position.WORKER).getAll();
+        List<Worker> workers = WorkerDaoFactory.getWorkerDao().getAll();
 
         String extension = getFileExtension(filePath);
         if(extension.contentEquals(".zip"))
@@ -40,13 +41,14 @@ public class Backup
             return false;
 
         // delete the entire database
-        List<Worker> currentWorkers = WorkerDaoFactory.getWorkerDao(Position.WORKER).getAll();
+        WorkerDao workerDao = WorkerDaoFactory.getWorkerDao();
+        List<Worker> currentWorkers = WorkerDaoFactory.getWorkerDao().getAll();
         for(Worker worker : currentWorkers)
-            WorkerDaoFactory.getWorkerDao(worker.getPosition()).delete(worker);
+            workerDao.delete(worker);
 
         // populate database with new entries
         for(Worker worker : workers)
-            WorkerDaoFactory.getWorkerDao(worker.getPosition()).save(worker);
+            workerDao.save(worker);
 
         return true;
     }

@@ -18,12 +18,13 @@ public class WorkerDao
 
     // main
     PreparedStatement getWorkerStatement = null;
-    PreparedStatement getAllWorkersIdsAndPositionIdsStatement = null;
+    PreparedStatement getAllWorkersIdsStatement = null;
     PreparedStatement insertWorkerStatement = null;
     PreparedStatement deleteWorkerStatement = null;
 
 
     // auxiliary
+    PreparedStatement getWorkerPositionStatement = null;
     PreparedStatement getPositionNameStatement = null;
     PreparedStatement getPositionIdStatement = null;
 
@@ -36,8 +37,8 @@ public class WorkerDao
             String getWorkerSQL = "SELECT * FROM workers WHERE id = ?";
             getWorkerStatement = connection.prepareStatement(getWorkerSQL);
 
-            String getAllWorkersIdsAndPositionIdsSQL = "SELECT id, position_id FROM workers";
-            getAllWorkersIdsAndPositionIdsStatement = connection.prepareStatement(getAllWorkersIdsAndPositionIdsSQL);
+            String getAllWorkersIdsSQL = "SELECT id FROM workers";
+            getAllWorkersIdsStatement = connection.prepareStatement(getAllWorkersIdsSQL);
 
             String insertWorkerSQL = "INSERT INTO "
                     + "workers(first_name, last_name, pesel, position_id, phone_number, service_card_number, salary) "
@@ -48,6 +49,9 @@ public class WorkerDao
             String deleteWorkerSQL = "DELETE FROM workers WHERE id = ?";
             deleteWorkerStatement = connection.prepareStatement(deleteWorkerSQL);
 
+
+            String getWorkerPosition = "SELECT position_id FROM workers WHERE id = ?";
+            getWorkerPositionStatement = connection.prepareStatement(getWorkerPosition);
 
             String getPositionNameSQL = "SELECT name FROM positions WHERE id = ?";
             getPositionNameStatement = connection.prepareStatement(getPositionNameSQL);
@@ -94,15 +98,13 @@ public class WorkerDao
         List<Worker> workers = new ArrayList<>();
         try
         {
-            ResultSet resultSet = getAllWorkersIdsAndPositionIdsStatement.executeQuery();
+            ResultSet resultSet = getAllWorkersIdsStatement.executeQuery();
+            WorkerDao workerDao = WorkerDaoFactory.getWorkerDao();
 
             while (resultSet.next())
             {
                 int workerId = resultSet.getInt("id");
-                int positionId = resultSet.getInt("position_id");
-                WorkerDao workerDao = WorkerDaoFactory.getWorkerDao(Position.fromName(getPositionName(positionId)));
-                Worker worker = workerDao.get(workerId);
-                workers.add(worker);
+                workers.add(workerDao.get(workerId));
             }
         }
         catch (SQLException ex)
@@ -113,7 +115,6 @@ public class WorkerDao
         return workers;
     }
 
-    // save updates worker's id if current id == -1
     public int save(Worker worker)
     {
         try
@@ -159,9 +160,31 @@ public class WorkerDao
         return false;
     }
 
+
     /*
      * Auxiliary methods
      */
+    Position getPositionById(int id)
+    {
+        try
+        {
+            getWorkerPositionStatement.setInt(1, id);
+            ResultSet resultSet = getWorkerPositionStatement.executeQuery();
+
+            if(resultSet.next())
+            {
+                int positionId = resultSet.getInt("position_id");
+                return Position.fromName(getPositionName(positionId));
+            }
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
     private String getPositionName(int id)
     {
         // There are only 3 (three) different position names, so querying database each time would be just dumb.

@@ -56,7 +56,7 @@ public class Menu
 
     static void printWorkers()
     {
-        for(Worker worker : WorkerDaoFactory.getWorkerDao(Position.WORKER).getAll())
+        for(Worker worker : WorkerDaoFactory.getWorkerDao().getAll())
             System.out.println(worker);
     }
 
@@ -68,7 +68,7 @@ public class Menu
         System.out.print("[Z]apisz / [O]drzuc : ");
         if(prompForSave())
         {
-            WorkerDao workerDao = WorkerDaoFactory.getWorkerDao(worker.getPosition());
+            WorkerDao workerDao = WorkerDaoFactory.getWorkerDao();
             workerDao.save(worker);
         }
     }
@@ -120,7 +120,8 @@ public class Menu
 
     static void deleteWorker()
     {
-        for(Worker worker : WorkerDaoFactory.getWorkerDao(Position.WORKER).getAll())
+        WorkerDao  workerDao = WorkerDaoFactory.getWorkerDao();
+        for(Worker worker : workerDao.getAll())
         {
             System.out.println(worker);
             System.out.println("Czy chcesz usunac tego pracownika?");
@@ -128,7 +129,7 @@ public class Menu
             char choice = promptForDelete();
             if(choice == 'u')
             {
-                WorkerDaoFactory.getWorkerDao(worker.getPosition()).delete(worker);
+                workerDao.delete(worker);
                 System.out.println("Usunieto pracownika " + worker.getFirstName() + " " + worker.getLastName());
             }
             else if(choice == 'w')

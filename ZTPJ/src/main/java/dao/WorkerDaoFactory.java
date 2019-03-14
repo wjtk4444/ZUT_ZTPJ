@@ -9,6 +9,8 @@ import java.util.Map;
 public class WorkerDaoFactory
 {
     // cache
+    private static WorkerDaoWrapper genericWorkerDao = new WorkerDaoWrapper();
+
     private static final Map<Position, WorkerDao> cache = new HashMap<>();
     static
     {
@@ -27,11 +29,16 @@ public class WorkerDaoFactory
             }
     }
 
-    public static WorkerDao getWorkerDao(Position position)
+    static WorkerDao getWorkerDaoByPosition(Position position)
     {
         if(cache.containsKey(position))
             return cache.get(position);
         else
             throw new NotImplementedException();
+    }
+
+    public static WorkerDao getWorkerDao()
+    {
+        return genericWorkerDao;
     }
 }
