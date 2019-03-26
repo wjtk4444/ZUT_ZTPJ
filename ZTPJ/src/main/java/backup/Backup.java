@@ -9,6 +9,9 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 public class Backup
 {
@@ -58,13 +61,16 @@ public class Backup
         try
         {
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-            //ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
+            ZipEntry zipEntry = new ZipEntry("database");
+            zipOutputStream.putNextEntry(zipEntry);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(zipOutputStream);
             for(Worker worker : workers)
                 objectOutputStream.writeObject(worker);
 
+            zipOutputStream.closeEntry();
             objectOutputStream.close();
-            //zipOutputStream.close();
+            zipOutputStream.close();
             fileOutputStream.close();
 
             return true;
@@ -81,14 +87,15 @@ public class Backup
         try
         {
             FileInputStream fileInputStream = new FileInputStream(filePath);
-            //ZipInputStream zipInputStream = new ZipInputStream(fileInputStream);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            ZipInputStream zipInputStream = new ZipInputStream(fileInputStream);
+            zipInputStream.getNextEntry();
+            ObjectInputStream objectInputStream = new ObjectInputStream(zipInputStream);
 
             while(fileInputStream.available() > 0)
                 workers.add((Worker)objectInputStream.readObject());
 
             objectInputStream.close();
-            //zipInputStream.close();
+            zipInputStream.close();
             fileInputStream.close();
 
             return workers;
