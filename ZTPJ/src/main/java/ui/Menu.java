@@ -143,7 +143,7 @@ public class Menu
     static void backup()
     {
         System.out.println("UWAGA: W przypadku przywracania bazy z pliku, wszystkie obecne dane zostana zastapione.");
-        System.out.print("[Z]achowaj / [O]dtworz / [W]yjscie");
+        System.out.print("[Z]achowaj / [O]dtworz / [W]yjscie : ");
         char choice = promptForBackup();
         if(choice == 'z')
         {
