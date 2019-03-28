@@ -54,4 +54,5 @@ Adres, nazwa użytkownika oraz hasło są zapisane "na sztywno" w pliku [Connect
 - [x] dodawanie pracownika
 - [x] usuwanie pracownika
 - [x] kopia zapasowa
-- [ ] kopia zapasowa z obsługą zip oraz gzip
+- [x] kopia zapasowa z obsługą zip
+- [ ] kopia zapasowa z obsługą gzip
