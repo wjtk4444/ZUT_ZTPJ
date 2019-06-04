@@ -26,7 +26,8 @@ public class Menu
             System.out.println("    2. Dodaj pracownika:");
             System.out.println("    3. Usun pracownika:");
             System.out.println("    4. Kopia zapasowa:");
-            System.out.println("    5. Pobierz dane z sieci:");
+            System.out.println("    5. Pobierz dane z sieci (hasło):");
+            System.out.println("    6. Pobierz dane z sieci (token rmi):");
             System.out.println("    0. Wyjscie:");
 
             switch (prompForInteger("Wybor> "))
@@ -51,7 +52,11 @@ public class Menu
                     break;
 
                 case 5:
-                    getDataFromNetwork();
+                    getDataFromNetwork(false);
+                    break;
+
+                case 6:
+                    getDataFromNetwork(true);
                     break;
 
                 default:
@@ -61,17 +66,40 @@ public class Menu
         }
     }
 
-    static void getDataFromNetwork()
+    static void getDataFromNetwork(boolean rmi)
     {
         String address = promptForString("Podaj adres serwera: ");
-        int port = prompForInteger("Podaj port: ");
-        String secret = promptForString("Podaj hasło: ");
+        int port = prompForInteger("Podaj port (serwer danych): ");
 
-        Client client = new Client();
+        String secret;
+        if(rmi)
+        {
+            int portRMI = prompForInteger("Podaj port (serwer RMI): ");
+
+            String username = promptForString("Podaj nazwe uzytkownika: ");
+            String password = promptForString("Podaj haslo: ");
+
+            rmi.Client client = new rmi.Client();
+            secret = client.getToken(address, portRMI, username, password);
+            if(secret == null)
+            {
+                System.out.println("Nieprawidlowe dane, lub blad poalczenia.");
+                return;
+            }
+
+            System.out.println("Otrzymano token: " + secret);
+            System.out.println("Autoryzacja tokenem");
+        }
+        else
+        {
+            secret = promptForString("Podaj haslo: ");
+        }
+
+        networking.Client client = new networking.Client();
         List<Worker> workers = client.getWorkersFromServer(address, port, secret);
         if (workers == null)
         {
-            System.out.println("Nieprawidłowe dane, lub błąd połączenia.");
+            System.out.println("Nieprawidlowe dane, lub blad poalczenia.");
         }
         else
         {

@@ -57,3 +57,6 @@ Adres, nazwa użytkownika oraz hasło są zapisane "na sztywno" w pliku [Connect
 
 #### Lab3:
 - [x] pobieranie danych z sieci
+
+#### Lab4:
+- [x] autoryzacja przez RMI 

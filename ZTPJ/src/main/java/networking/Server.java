@@ -1,6 +1,7 @@
 package networking;
 
 import dao.WorkerDaoFactory;
+import rmi.Validator;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -36,9 +37,11 @@ public class Server
                             public void run() {
                                 try
                                 {
+                                    Validator validator = new Validator();
                                     DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
                                     DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-                                    if(!dataInputStream.readUTF().contentEquals("secret"))
+                                    String secret = dataInputStream.readUTF();
+                                    if(!secret.contentEquals("secret") && !validator.validateToken(secret))
                                     {
                                         dataOutputStream.writeUTF("403 Forbidden");
                                     }
