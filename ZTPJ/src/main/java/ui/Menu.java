@@ -5,7 +5,9 @@ import dao.WorkerDao;
 import dao.WorkerDaoFactory;
 import model.Position;
 import model.Worker;
+import networking.Client;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static ui.Utils.*;
@@ -24,6 +26,7 @@ public class Menu
             System.out.println("    2. Dodaj pracownika:");
             System.out.println("    3. Usun pracownika:");
             System.out.println("    4. Kopia zapasowa:");
+            System.out.println("    5. Pobierz dane z sieci:");
             System.out.println("    0. Wyjscie:");
 
             switch (prompForInteger("Wybor> "))
@@ -47,10 +50,34 @@ public class Menu
                     backup();
                     break;
 
+                case 5:
+                    getDataFromNetwork();
+                    break;
+
                 default:
                     System.out.println("Niepoprwana opcja");
                     break;
             }
+        }
+    }
+
+    static void getDataFromNetwork()
+    {
+        String address = promptForString("Podaj adres serwera: ");
+        int port = prompForInteger("Podaj port: ");
+        String secret = promptForString("Podaj hasło: ");
+
+        Client client = new Client();
+        List<Worker> workers = client.getWorkersFromServer(address, port, secret);
+        if (workers == null)
+        {
+            System.out.println("Nieprawidłowe dane, lub błąd połączenia.");
+        }
+        else
+        {
+            System.out.println("Dane pobrane z sieci:");
+            for (Worker worker : workers)
+                System.out.println(worker);
         }
     }
 
