@@ -7,6 +7,7 @@ import model.Position;
 import model.Worker;
 import networking.Client;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,6 +29,7 @@ public class Menu
             System.out.println("    4. Kopia zapasowa:");
             System.out.println("    5. Pobierz dane z sieci (hasło):");
             System.out.println("    6. Pobierz dane z sieci (token rmi):");
+            System.out.println("    7. Pobierz dane z sieci (jaxws, token rmi):");
             System.out.println("    0. Wyjscie:");
 
             switch (prompForInteger("Wybor> "))
@@ -59,6 +61,10 @@ public class Menu
                     getDataFromNetwork(true);
                     break;
 
+                case 7:
+                    getDataFromWebService();
+                    break;
+
                 default:
                     System.out.println("Niepoprwana opcja");
                     break;
@@ -66,40 +72,75 @@ public class Menu
         }
     }
 
+    static String getRMIToken()
+    {
+        String address = promptForString("Podaj adres serwera rmi: ");
+        int port = prompForInteger("Podaj port rmi: ");
+
+        String username = promptForString("Podaj nazwe uzytkownika: ");
+        String password = promptForString("Podaj haslo: ");
+
+        rmi.Client client = new rmi.Client();
+        String token = client.getToken(address, port, username, password);
+        if(token == null)
+        {
+            System.out.println("Nieprawidlowe dane, lub blad poalczenia.");
+            return null;
+        }
+
+        System.out.println("Otrzymano token: " + token);
+        System.out.println("Autoryzacja tokenem");
+
+        return token;
+    }
+
+    static void getDataFromWebService()
+    {
+        String token = getRMIToken();
+        if(token == null)
+            return;
+
+        String address = promptForString("Podaj adres serwera jaxws: ");
+        int port = prompForInteger("Podaj port jaxws: ");
+
+        jaxws.Client clientJaxWS = new jaxws.Client(address, port);
+
+
+        List<Worker> workers = clientJaxWS.getWorkersFromServer(token);
+        if (workers == null)
+        {
+            System.out.println("Nieprawidlowe dane autoryzacji, lub blad poalczenia.");
+        }
+        else
+        {
+            System.out.println("Dane pobrane z sieci:");
+            for (Worker worker : workers)
+                System.out.println(worker);
+        }
+    }
+
     static void getDataFromNetwork(boolean rmi)
     {
-        String address = promptForString("Podaj adres serwera: ");
-        int port = prompForInteger("Podaj port (serwer danych): ");
-
         String secret;
         if(rmi)
         {
-            int portRMI = prompForInteger("Podaj port (serwer RMI): ");
-
-            String username = promptForString("Podaj nazwe uzytkownika: ");
-            String password = promptForString("Podaj haslo: ");
-
-            rmi.Client client = new rmi.Client();
-            secret = client.getToken(address, portRMI, username, password);
+            secret = getRMIToken();
             if(secret == null)
-            {
-                System.out.println("Nieprawidlowe dane, lub blad poalczenia.");
                 return;
-            }
-
-            System.out.println("Otrzymano token: " + secret);
-            System.out.println("Autoryzacja tokenem");
         }
         else
         {
             secret = promptForString("Podaj haslo: ");
         }
 
+        String address = promptForString("Podaj adres serwera: ");
+        int port = prompForInteger("Podaj port (serwer danych): ");
+
         networking.Client client = new networking.Client();
         List<Worker> workers = client.getWorkersFromServer(address, port, secret);
         if (workers == null)
         {
-            System.out.println("Nieprawidlowe dane, lub blad poalczenia.");
+            System.out.println("Nieprawidlowe dane autoryzacji, lub blad poalczenia.");
         }
         else
         {

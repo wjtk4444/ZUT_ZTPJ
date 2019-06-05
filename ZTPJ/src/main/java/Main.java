@@ -10,9 +10,13 @@ public class Main
         rmi.Server serverRMI = new rmi.Server(12345); // username: "admin", password: "admin1" || "user", "qwerty"
         serverRMI.runServer();
 
+        jaxws.Server serverJAXWS = new jaxws.Server(8080);
+        serverJAXWS.runServer();
+
         Menu.displayMenu();
 
         serverRMI.stopServer();
         serverNetworking.stopServer();
+        serverJAXWS.stopServer();
     }
 }

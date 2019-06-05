@@ -1,10 +1,13 @@
 package model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Worker implements Serializable
 {
     @XmlElement
@@ -24,6 +27,8 @@ public class Worker implements Serializable
     private int salary;
     @XmlElement
     private int id; // database id
+
+    protected Worker() { }
 
     public Worker(String firstName, String lastName, String pesel, int salary, String phoneNumber, String serviceCardNumber, int id)
     {

@@ -3,16 +3,21 @@ package model.worker;
 import model.Position;
 import model.Worker;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Director extends Worker
 {
     @XmlElement
     private int businessAllowance;
     @XmlElement
     private int monthlyCostLimit;
+
+    Director() { }
 
     public Director(String firstName, String lastName, String pesel, int salary, String phoneNumber, String serviceCardNumber, int id,
                      int businessAllowance, int monthlyCostLimit)
