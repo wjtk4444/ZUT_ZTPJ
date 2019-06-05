@@ -3,15 +3,13 @@ package ui;
 import backup.Backup;
 import dao.WorkerDao;
 import dao.WorkerDaoFactory;
-import model.Position;
 import model.Worker;
-import networking.Client;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static ui.Utils.*;
+import static ui.Utils.prompForInteger;
+import static ui.Utils.promptForString;
 
 public class Menu
 {

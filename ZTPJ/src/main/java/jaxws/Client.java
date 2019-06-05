@@ -3,14 +3,11 @@ package jaxws;
 import model.Worker;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Client

@@ -2,7 +2,6 @@ package backup;
 
 import dao.WorkerDao;
 import dao.WorkerDaoFactory;
-import model.Position;
 import model.Worker;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 

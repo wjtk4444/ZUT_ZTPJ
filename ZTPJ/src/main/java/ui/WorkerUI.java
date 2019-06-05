@@ -1,6 +1,6 @@
 package ui;
 
-import model.*;
+import model.Position;
 import model.worker.Director;
 import model.worker.Tradesman;
 

@@ -1,10 +1,13 @@
 package jaxws;
+import com.sun.xml.internal.ws.server.EndpointFactory;
+
 import javax.xml.ws.Endpoint;
 
 
 public class Server
 {
     private int port;
+    private Endpoint endpoint;
 
     public Server(int port)
     {
@@ -13,9 +16,12 @@ public class Server
 
     public void runServer()
     {
+        if(endpoint != null)
+            return;
+
         try
         {
-            Endpoint.publish("http://localhost:" + port + "/IWorkersWebService", new WorkersWebServiceImpl());
+            endpoint = Endpoint.publish("http://localhost:" + port + "/IWorkersWebService", new WorkersWebServiceImpl());
         }
         catch(Exception ex)
         {
@@ -25,6 +31,9 @@ public class Server
 
     public void stopServer()
     {
-        // do nothing, endpoints cannot be removed
+        if(endpoint == null)
+            return;
+
+        endpoint.stop();
     }
 }

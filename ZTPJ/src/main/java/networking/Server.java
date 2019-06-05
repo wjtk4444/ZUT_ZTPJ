@@ -5,7 +5,6 @@ import rmi.Validator;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -34,8 +33,6 @@ public class Server
                 try
                 {
                     serverSocket = new ServerSocket(port);
-                    System.out.println("server running ");
-
                     while(!Thread.currentThread().isInterrupted())
                     {
                         Socket socket = serverSocket.accept();

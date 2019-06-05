@@ -1,7 +1,6 @@
 package jaxws;
 
 import dao.WorkerDaoFactory;
-import model.Worker;
 import rmi.Validator;
 
 import javax.jws.WebMethod;
@@ -9,7 +8,6 @@ import javax.jws.WebService;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import java.io.StringWriter;
-import java.util.ArrayList;
 
 @WebService(endpointInterface = "jaxws.IWorkersWebService", targetNamespace="http://localhost/")
 public class WorkersWebServiceImpl implements IWorkersWebService
