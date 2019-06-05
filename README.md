@@ -60,3 +60,11 @@ Adres, nazwa użytkownika oraz hasło są zapisane "na sztywno" w pliku [Connect
 
 #### Lab4:
 - [x] autoryzacja przez RMI 
+
+#### Lab5:
+
+#### Lab6:
+- [x] annotacje XML
+
+#### Lab7:
+- [x] webserwis SOAP
