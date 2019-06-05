@@ -14,23 +14,28 @@ public class Server
 
     public void runServer()
     {
-        Runnable serverThread =  new Runnable() {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    Validator validator = new Validator();
-                    Registry registry = LocateRegistry.createRegistry(port);
-                    registry.rebind("validator", validator);
-                }
-                catch(Exception ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
-        };
+        try
+        {
+            Validator validator = new Validator();
+            Registry registry = LocateRegistry.createRegistry(port);
+            registry.rebind("validator", validator);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
 
-        new Thread(serverThread).start();
+    public void stopServer()
+    {
+        try
+        {
+            Registry registry = LocateRegistry.getRegistry(port);
+            registry.unbind("validator");
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
     }
 }

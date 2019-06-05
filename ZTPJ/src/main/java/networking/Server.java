@@ -5,13 +5,17 @@ import rmi.Validator;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class Server
 {
     private int port;
+    private Thread serverThread;
+    private ServerSocket serverSocket;
 
     public Server(int port)
     {
@@ -20,16 +24,19 @@ public class Server
 
     public void runServer()
     {
-        Runnable serverThread =  new Runnable() {
+        if(serverThread != null)
+            return;
+
+        serverThread = new Thread(new Runnable() {
             @Override
             public void run()
             {
                 try
                 {
-                    ServerSocket serverSocket = new ServerSocket(port);
+                    serverSocket = new ServerSocket(port);
                     System.out.println("server running ");
 
-                    while(true)
+                    while(!Thread.currentThread().isInterrupted())
                     {
                         Socket socket = serverSocket.accept();
                         new Thread(new Runnable() {
@@ -65,13 +72,51 @@ public class Server
                         }).start();
                     }
                 }
+                catch (SocketException ex)
+                {
+                    if(!Thread.currentThread().isInterrupted())
+                        ex.printStackTrace();
+                    // else
+                        // ignore if thread was interrupted and socket force-closed
+                }
                 catch(Exception ex)
                 {
                     ex.printStackTrace();
                 }
             }
-        };
+        });
 
-        new Thread(serverThread).start();
+        serverThread.start();
+    }
+
+    public void stopServer()
+    {
+        if(serverThread == null)
+            return;
+
+        // singnal the thread to quit
+        serverThread.interrupt();
+
+        try
+        {
+            // force close because reasons
+            // https://stackoverflow.com/questions/4425350
+            serverSocket.close();
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        try
+        {
+            serverThread.join();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        serverThread = null;
     }
 }
