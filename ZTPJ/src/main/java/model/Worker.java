@@ -1,17 +1,28 @@
 package model;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
+@XmlRootElement
 public class Worker implements Serializable
 {
+    @XmlElement
     private String firstName;
+    @XmlElement
     private String lastName;
+    @XmlElement
     private String pesel;
+    @XmlElement
     protected Position position;
 
+    @XmlElement
     private String phoneNumber;
+    @XmlElement
     private String serviceCardNumber;
+    @XmlElement
     private int salary;
+    @XmlElement
     private int id; // database id
 
     public Worker(String firstName, String lastName, String pesel, int salary, String phoneNumber, String serviceCardNumber, int id)

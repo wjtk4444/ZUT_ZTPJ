@@ -3,9 +3,15 @@ package model.worker;
 import model.Position;
 import model.Worker;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Tradesman extends Worker
 {
+    @XmlElement
     private int commission;
+    @XmlElement
     private int monthlyCommissionLimit;
 
     public Tradesman(String firstName, String lastName, String pesel, int salary, String phoneNumber, String serviceCardNumber, int id,
