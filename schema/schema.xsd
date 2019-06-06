@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="director" type="director"/>
+  <xs:element name="tradesman" type="tradesman"/>
+
+  <xs:element name="worker" type="worker"/>
+
+  <xs:complexType name="director">
+    <xs:complexContent>
+      <xs:extension base="worker">
+        <xs:sequence>
+          <xs:element name="businessAllowance" type="xs:int"/>
+          <xs:element name="monthlyCostLimit" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="tradesman">
+    <xs:complexContent>
+      <xs:extension base="worker">
+        <xs:sequence>
+          <xs:element name="commission" type="xs:int"/>
+          <xs:element name="monthlyMissionLimit" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="worker">
+    <xs:sequence>
+      <xs:element name="firstName" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastName" type="xs:string" minOccurs="0"/>
+      <xs:element name="pesel" type="xs:string" minOccurs="0"/>
+      <xs:element name="position" type="position" minOccurs="0"/>
+      <xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="serviceCardNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="salary" type="xs:int"/>
+      <xs:element name="id" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="position">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="WORKER"/>
+      <xs:enumeration value="TRADESMAN"/>
+      <xs:enumeration value="DIRECTOR"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+
