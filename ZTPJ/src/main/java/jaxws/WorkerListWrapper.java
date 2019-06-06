@@ -1,18 +1,21 @@
 package jaxws;
 
 import model.Worker;
+import model.worker.Director;
+import model.worker.Tradesman;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WorkerListWrapper
 {
-    @XmlElement
+    @XmlElements({
+            @XmlElement(type = Worker.class),
+            @XmlElement(type = Director.class),
+            @XmlElement(type = Tradesman.class),
+    })
     private List<Worker> workers;
 
     public List<Worker> getWorkers()
