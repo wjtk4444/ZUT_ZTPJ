@@ -11,11 +11,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WorkerListWrapper
 {
-    @XmlElements({
-            @XmlElement(type = Worker.class),
-            @XmlElement(type = Director.class),
-            @XmlElement(type = Tradesman.class),
-    })
+    @XmlElement
     private List<Worker> workers;
 
     public List<Worker> getWorkers()

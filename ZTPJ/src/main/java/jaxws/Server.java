@@ -1,5 +1,4 @@
 package jaxws;
-import com.sun.xml.internal.ws.server.EndpointFactory;
 
 import javax.xml.ws.Endpoint;
 

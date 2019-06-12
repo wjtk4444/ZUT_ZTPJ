@@ -1,13 +1,14 @@
 package model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import model.worker.Director;
+import model.worker.Tradesman;
+
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso({ Tradesman.class, Director.class })
 public class Worker implements Serializable
 {
     @XmlElement

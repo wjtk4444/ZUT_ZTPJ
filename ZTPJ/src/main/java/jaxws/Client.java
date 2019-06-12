@@ -35,16 +35,7 @@ public class Client
     {
         try
         {
-            String workersXML = workersWebService.getAllWorkersXML(token);
-            if(workersXML == null)
-                return null;
-
-            JAXBContext jaxbContext = JAXBContext.newInstance(WorkerListWrapper.class);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
-            StringReader stringReader = new StringReader(workersXML);
-            WorkerListWrapper workerListWrapper = (WorkerListWrapper)unmarshaller.unmarshal(stringReader);
-
+            WorkerListWrapper workerListWrapper = workersWebService.getAllWorkersXML(token);
             return workerListWrapper.getWorkers();
         }
         catch(Exception ex)
